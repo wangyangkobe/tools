@@ -1,0 +1,28 @@
+﻿Build started 2014/7/24 11:55:37.
+     1>Project "C:\Users\elqstux\Desktop\convertSigTraceLog\convertSigTraceLog\convertSigTraceLog.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Release\convertSigTraceLog.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\convertSigTraceLog.cpp
+         convertSigTraceLog.cpp
+     1>..\..\convertSigTraceLog.cpp(53): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
+     1>..\..\convertSigTraceLog.cpp(96): warning C4018: '<' : signed/unsigned mismatch
+         All outputs are up-to-date.
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\elqstux\Desktop\convertSigTraceLog\Release\convertSigTraceLog.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\convertSigTraceLog.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\elqstux\Desktop\convertSigTraceLog\Release\convertSigTraceLog.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\elqstux\Desktop\convertSigTraceLog\Release\convertSigTraceLog.lib" /MACHINE:X86 Release\convertSigTraceLog.obj
+         "Release\getopt .obj"
+         Release\tinyxml2.obj
+         Generating code
+         Finished generating code
+         convertSigTraceLog.vcxproj -> C:\Users\elqstux\Desktop\convertSigTraceLog\Release\convertSigTraceLog.exe
+       Manifest:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\elqstux\Desktop\convertSigTraceLog\Release\convertSigTraceLog.exe;#1" /manifest Release\convertSigTraceLog.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Release\convertSigTraceLog.unsuccessfulbuild".
+         Touching "Release\convertSigTraceLog.lastbuildstate".
+     1>Done Building Project "C:\Users\elqstux\Desktop\convertSigTraceLog\convertSigTraceLog\convertSigTraceLog.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:05.02
