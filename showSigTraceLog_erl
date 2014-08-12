@@ -1,0 +1,114 @@
+#!/usr/bin/env escript
+
+-mode(compile).
+-export([main/1]).
+
+-include_lib("xmerl/include/xmerl.hrl").
+-include_lib("eunit/include/eunit.hrl").
+
+main([InFileName]) ->
+    case filelib:is_file(InFileName) of
+	true ->
+	    Res = extract_element(InFileName),
+	    lists:map(fun([X]) -> 
+			      Lines = string:tokens(hex2s(X), "\r\n"),
+			      lists:foreach(fun(Line) -> io:format("~p~n", [Line]) end,
+					    Lines),
+			      io:format("~n~n");
+			 ([[]]) ->
+			      io:format("There is no such file, please check again!~n")
+		      end, Res);
+        false ->
+	    io:format("There is no such file, please check again!~n")
+    end,
+    init:stop();
+main([In, Out]) ->
+    case filelib:is_file(In) of
+	true ->
+	    case file:open(Out, [write, raw]) of
+		{ok, IoDevice} ->
+		    Res = extract_element(In),
+		    dump_file(IoDevice, Res),
+		    file:close(IoDevice);
+		{error, Reason} ->
+		    io:format("Open the output file failded! Reason:~p~n", [Reason])
+	    end;
+	false ->
+	    io:format("There is no such file, please check again!~n")
+    end,
+    init:stop();
+main(_Other) ->
+    io:format("-------------------------------~n"),
+    io:format("Covert signal tracing log file to readable format.~n"),
+    io:format("Usage:~n"),
+    io:format("Write to console: ./showSigTraceLog singal_tracing_log.xml~n"),
+    io:format("Write to file   : ./showSigTraceLog singal_tracing_log.xml  outPutFileName~n"),
+    io:format("Please input the right file!~n"),
+    io:format("-------------------------------~n"),
+    init:stop().
+
+%% @sepc dump_file(atom(), list()) -> ok.
+%% @doc Write the list to file IoDevice.
+dump_file(_IoDevice, []) ->
+    io:format("Write to file finished.~n");
+dump_file(_IoDevice, [[]]) ->
+    io:format("There is no validate sip msg in the log file.~n");
+dump_file(IoDevice, [[H] | T]) ->
+    Msg = hex2s(H),
+    file:write(IoDevice,  Msg),
+    dump_file(IoDevice, T).
+
+%% @spec extract_element(string()) -> list().
+%% @doc Extract rawMsg attribute from xml file(FileName).
+extract_element(FileName) ->
+    try xmerl_scan:file(FileName, [{encoding, 'utf-8'}]) of
+	{XmlElement, _Rest} ->
+	    lists:reverse(extract(XmlElement, []))
+    catch
+	_:_ ->
+	    io:format("The input file is not a validate xml file!~n"),
+	    []
+    end.
+
+extract(Record, Res) when is_record(Record, xmlElement) ->
+    case Record#xmlElement.name of
+        rawMsg ->
+            ItemData = lists:foldl(fun extract/2, [], Record#xmlElement.content),
+            [ItemData | Res];
+        _ ->
+            lists:foldl(fun extract/2, Res, Record#xmlElement.content)
+    end;
+extract({xmlText, Parents, _, _, Value, text}, Res) ->
+    case lists:keyfind(rawMsg, 1, Parents) of
+	false -> 
+	    Res;
+	_Other ->
+	    [Value | Res]
+    end;
+extract(_, Res) ->
+    Res.
+
+
+%% @sepc hex2s(string()) -> string().
+%% @doc Convert hex format to readabl format.
+hex2s(HStr) -> hex2s(HStr,[]).
+
+hex2s([X1,X2|Rest], Acc) -> hex2s(Rest, [ hv(X1) * 16 + hv(X2) |Acc ]);
+hex2s([], Acc)           -> lists:reverse(Acc).
+
+hv($0) -> 0;
+hv($1) -> 1; 
+hv($2) -> 2;
+hv($3) -> 3; 
+hv($4) -> 4; 
+hv($5) -> 5; 
+hv($6) -> 6; 
+hv($7) -> 7; 
+hv($8) -> 8; 
+hv($9) -> 9; 
+hv($A) -> 10; 
+hv($B) -> 11; 
+hv($C) -> 12;
+hv($D) -> 13; 
+hv($E) -> 14; 
+hv($F) -> 15.
