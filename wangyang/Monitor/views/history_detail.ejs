@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Buy Report</title>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        body {
+            background-color: #003333;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">财聚宝</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">主页</a></li>
+                <li class="active"><a href="/history">历史数据</a></li>
+                <li><a href="/contact">联系</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="container">
+    <table align="center">
+        <tr>
+            <td>
+                <p><font size="5">欢迎使用财聚宝，这是<%= date.format("YYYY年MM月DD日") %>的数据.
+            </td>
+        </tr>
+    </table>
+    <div class="content" id="content">
+        <ul>
+            <% data.forEach(function(line){ %>
+            <% var res = line.split("\n") %>
+            <li><font size="3"><%= res[0] %><br><%= res[1] %></font></li>
+            <br>
+
+            <% }) %>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
